@@ -24,7 +24,7 @@ export const DESTINATIONS = [
 ] as const;
 
 // Firebase paths
-export const FB = {
+export const FIREBASE_PATHS = {
   ACTIVE_RIDE:     'namlo-rides/active_ride',
   DRIVER_PRESENCE: 'namlo-rides/driver_presence',
 } as const;
