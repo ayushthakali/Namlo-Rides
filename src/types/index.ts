@@ -12,6 +12,7 @@ export type RideStatus =
 
 export interface AuthUser {
   email: string;
+  password: string;
   role: UserRole;
 }
 

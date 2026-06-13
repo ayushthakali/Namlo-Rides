@@ -1,1 +1,23 @@
 @import "tailwindcss";
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+    --color-c1: #2BB8A8;
+    --color-c2: #2E73C8;
+    --color-c3: #1E3A8A;
+    --color-c4: #E6F7F5;
+    /* hover */
+    --color-c5: #E8F0FC;
+    /* light tinit */
+    --color-c6: #E2E8F0;
+    /* border */
+}
+
+@theme {
+    --color-c1: var(--color-c1);
+    --color-c2: var(--color-c2);
+    --color-c3: var(--color-c3);
+    --color-c4: var(--color-c4);
+    --color-c5: var(--color-c5);
+    --color-c6: var(--color-c6);
+}
