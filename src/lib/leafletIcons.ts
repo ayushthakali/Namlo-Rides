@@ -25,7 +25,7 @@ export const riderIcon = L.divIcon({
 // Driver — orange car emoji pill
 export const driverIcon = L.divIcon({
   className: '',
-  html: `<div style="background:white;border:2px solid #f97316;border-radius:20px;padding:4px 8px;font-size:16px;box-shadow:0 2px 8px rgba(249,115,22,.4);line-height:1">🚖</div>`,
+  html: `<div style="background:white;border:2px solid #f97316;border-radius:20px;padding:4px 8px;font-size:16px;box-shadow:0 2px 8px rgba(249,115,22,.4);line-height:1;display:flex;align-items:center;justify-content:center">🚖</div>`,
   iconSize:   [44, 32],
   iconAnchor: [22, 16],
 });

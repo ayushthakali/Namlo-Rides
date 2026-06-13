@@ -32,7 +32,7 @@ export const DriverMarker: React.FC<DriverMarkerProps> = React.memo(
   ({ lat, lng }) => (
     <Marker position={[lat, lng]} icon={driverIcon}>
       <Popup>
-        <span className="text-sm font-medium">🚖 Your driver</span>
+        <span className="text-sm font-medium">🚖 Driver</span>
       </Popup>
     </Marker>
   ),

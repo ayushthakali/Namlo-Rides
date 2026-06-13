@@ -26,7 +26,7 @@ export const Navbar: React.FC = React.memo(() => {
         <Link to="/" className="flex items-center gap-1 group">
           <div className="flex size-10 items-center justify-center overflow-hidden">
             <img
-              src="/onlylogo.png"
+              src="/onlylogo.webp"
               alt="Namlo-Rides Logo"
               className="h-full w-full object-contain transition-transform duration-200 group-hover:scale-105"
             />

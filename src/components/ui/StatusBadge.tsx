@@ -1,4 +1,3 @@
-
 import React from "react";
 import { STATUS_LABELS, STATUS_COLORS } from "../../lib/constants";
 import type { RideStatus } from "../../types";

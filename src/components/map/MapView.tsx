@@ -7,6 +7,9 @@ import { KATHMANDU, DEFAULT_ZOOM, RIDER_START } from "../../lib/constants";
 const MapViewInner: React.FC = () => {
   const activeRide = useAppSelector((s) => s.ride.activeRide);
   const driverPresence = useAppSelector((s) => s.ride.driverPresence);
+  const role = useAppSelector((s) => s.auth.user?.role);
+  const isDriverOnline = driverPresence?.isOnline;
+  const isRider = role === "rider";
 
   // useMemo — rider marker only recomputes when rider coords change
   const riderPos = useMemo(
@@ -38,7 +41,7 @@ const MapViewInner: React.FC = () => {
       lng: activeRide.destLng,
       address: activeRide.destAddress,
     };
-  }, [activeRide?.destLat, activeRide?.destLng, activeRide?.destAddress]);
+  }, [activeRide]);
 
   return (
     <div className="relative h-full w-full rounded-xl overflow-hidden shadow-md">
@@ -52,8 +55,18 @@ const MapViewInner: React.FC = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <RiderMarker lat={riderPos.lat} lng={riderPos.lng} />
-        {driverPos && <DriverMarker lat={driverPos.lat} lng={driverPos.lng} />}
+        {/* Only show rider location if requested state */}
+        {(isRider || activeRide) && (
+          <RiderMarker lat={riderPos.lat} lng={riderPos.lng} />
+        )}
+        {/* Rider Marker if offline for driver */}
+        {driverPos && !isRider && !isDriverOnline && (
+          <RiderMarker lat={driverPos.lat} lng={driverPos.lng} />
+        )}
+        {/* Only show driver marker when online */}
+        {driverPos && isDriverOnline && (
+          <DriverMarker lat={driverPos.lat} lng={driverPos.lng} />
+        )}
         {destPos && (
           <DestMarker
             lat={destPos.lat}
@@ -65,7 +78,7 @@ const MapViewInner: React.FC = () => {
 
       {/* Status pill floating over map */}
       {activeRide && activeRide.status !== "idle" && (
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[1000] pointer-events-none">
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-1000 pointer-events-none">
           <div className="bg-slate-800 text-white text-xs font-medium px-4 py-1.5 rounded-full shadow-lg">
             {{
               requested: "🔍 Finding your driver...",

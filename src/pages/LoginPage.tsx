@@ -55,7 +55,7 @@ function LoginPage() {
         {/* Header */}
         <div className="flex flex-col w-full justify-center items-center">
           <img
-            src="/logonobg.png"
+            src="/logonobg.webp"
             alt="Company Logo"
             className="w-full max-w-36 h-auto object-cover"
           />
@@ -170,6 +170,9 @@ function LoginPage() {
             )}
           </button>
         </form>
+        <p className="text-center text-xs text-slate-400 mt-4">
+          Demo: intern@namlotech.com / namlo2026
+        </p>
       </div>
     </div>
   );

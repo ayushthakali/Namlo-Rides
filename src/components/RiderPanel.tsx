@@ -1,7 +1,3 @@
-// RiderPanel — state-driven UI.
-// Each ride status shows different content.
-// useCallback on handlers = stable references = no unnecessary child re-renders.
-
 import { useState, useCallback, useMemo } from "react";
 import { useAppSelector } from "../store";
 import { useRideActions } from "../hooks/useRideActions";
@@ -30,10 +26,9 @@ export function RiderPanel() {
     setCancelling(false);
   }, [actions]);
 
-  // useMemo — only recomputes when activeRide changes, not on every render
   const fareDisplay = useMemo(
     () => (activeRide ? `Rs. ${activeRide.fare.toFixed(0)}` : ""),
-    [activeRide?.fare],
+    [activeRide],
   );
 
   return (
@@ -41,13 +36,13 @@ export function RiderPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-slate-800">Rider</h2>
+          <h2 className="text-xl font-bold text-slate-800">Rider</h2>
           <p className="text-xs text-slate-400">Request and track your ride</p>
         </div>
         <StatusBadge status={status} />
       </div>
 
-      {/* IDLE — pick destination and request */}
+      {/* Idle status*/}
       {status === "idle" && (
         <div className="flex flex-col gap-3">
           <div>
@@ -61,7 +56,7 @@ export function RiderPanel() {
                          focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
               {DESTINATIONS.map((d, i) => (
-                <option key={i} value={i}>
+                <option key={d.lat} value={i}>
                   {d.address}
                 </option>
               ))}
@@ -81,11 +76,11 @@ export function RiderPanel() {
         </div>
       )}
 
-      {/* REQUESTED — waiting */}
+      {/* Requested status */}
       {status === "requested" && (
         <div className="flex flex-col gap-3">
           <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
-            <div className="text-3xl mb-2">🔍</div>
+            <div className="text-3xl mb-2 animate-bounce">🔍</div>
             <p className="text-sm font-medium text-yellow-800">
               Looking for a driver...
             </p>
@@ -114,7 +109,7 @@ export function RiderPanel() {
         </div>
       )}
 
-      {/* ACCEPTED */}
+      {/* Accepted State */}
       {status === "accepted" && (
         <div className="flex flex-col gap-3">
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
@@ -137,7 +132,7 @@ export function RiderPanel() {
         </div>
       )}
 
-      {/* DRIVER ARRIVING */}
+      {/* Driver Arriving State */}
       {status === "driver_arriving" && (
         <div className="flex flex-col gap-3">
           <div className="bg-purple-50 border border-purple-200 rounded-xl p-4 text-center">
@@ -160,7 +155,7 @@ export function RiderPanel() {
         </div>
       )}
 
-      {/* IN PROGRESS */}
+      {/* In Progress State */}
       {status === "in_progress" && (
         <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
           <div className="text-3xl mb-2">🛣️</div>
@@ -171,7 +166,7 @@ export function RiderPanel() {
         </div>
       )}
 
-      {/* COMPLETED */}
+      {/* Completed State */}
       {status === "completed" && (
         <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
           <div className="text-3xl mb-2">🎉</div>
@@ -182,7 +177,7 @@ export function RiderPanel() {
         </div>
       )}
 
-      {/* CANCELLED / REJECTED */}
+      {/* Cancelled / Rejected State*/}
       {(status === "cancelled" || status === "rejected") && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
           <div className="text-3xl mb-2">❌</div>

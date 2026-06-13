@@ -1,10 +1,3 @@
-// RTK Query's useGetHistoryQuery handles:
-//   - the fetch itself
-//   - isLoading / isError states
-//   - caching (won't refetch if data is fresh)
-//   - auto-refetch after saveHistory mutation (via tag invalidation)
-// No manual useState, no useEffect, no fetch() needed.
-
 import { useGetRideHistoryQuery } from "../store/historyApi";
 
 export default function HistoryPage() {

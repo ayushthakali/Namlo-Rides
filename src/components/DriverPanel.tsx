@@ -19,7 +19,11 @@ export function DriverPanel() {
 
   const handleToggleOnline = useCallback(async () => {
     setToggling(true);
-    isOnline ? await actions.goOffline() : await actions.goOnline();
+    if (isOnline) {
+      await actions.goOffline();
+    } else {
+      await actions.goOnline();
+    }
     setToggling(false);
   }, [isOnline, actions]);
 
@@ -64,7 +68,7 @@ export function DriverPanel() {
         <StatusBadge status={status} />
       </div>
 
-      {/* Online toggle — always visible */}
+      {/* Online toggle*/}
       <button
         onClick={handleToggleOnline}
         disabled={toggling || (status !== "idle" && isOnline)}
@@ -89,24 +93,24 @@ export function DriverPanel() {
         >
           <span
             className={[
-              "absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform",
+              "absolute top-1 left-0 w-4 h-4 rounded-full bg-white shadow transition-transform",
               isOnline ? "translate-x-5" : "translate-x-1",
             ].join(" ")}
           />
         </span>
       </button>
 
-      {/* IDLE — waiting */}
+      {/* Idle State */}
       {status === "idle" && isOnline && (
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center">
-          <div className="text-3xl mb-2">⏳</div>
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center overflow-hidden">
+          <div className="text-3xl mb-2 animate-spin">⏳</div>
           <p className="text-sm font-medium text-slate-600">
             Waiting for a ride request...
           </p>
         </div>
       )}
 
-      {/* REQUESTED — new ride available */}
+      {/* Requested State */}
       {status === "requested" && (
         <div className="flex flex-col gap-3">
           <div className="bg-yellow-50 border-2 border-yellow-400 rounded-xl p-4">
@@ -150,7 +154,7 @@ export function DriverPanel() {
         </div>
       )}
 
-      {/* ACCEPTED — navigate to pickup */}
+      {/* Accepted State*/}
       {status === "accepted" && (
         <div className="flex flex-col gap-3">
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
@@ -168,7 +172,7 @@ export function DriverPanel() {
         </div>
       )}
 
-      {/* DRIVER ARRIVING — at pickup, start ride */}
+      {/* Driver Arriving State*/}
       {status === "driver_arriving" && (
         <div className="flex flex-col gap-3">
           <div className="bg-purple-50 border border-purple-200 rounded-xl p-4 text-center">
@@ -186,7 +190,7 @@ export function DriverPanel() {
         </div>
       )}
 
-      {/* IN PROGRESS */}
+      {/* In progress State */}
       {status === "in_progress" && (
         <div className="flex flex-col gap-3">
           <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
@@ -215,7 +219,7 @@ export function DriverPanel() {
           <p className="text-sm font-medium text-slate-700 capitalize">
             {status}
           </p>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 mt-1 ">
             Waiting for next request...
           </p>
         </div>
