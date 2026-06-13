@@ -22,19 +22,23 @@ export function useRideActions() {
       ride: ActiveRide,
       finalStatus: "completed" | "cancelled" | "rejected",
     ) => {
-      await saveRideHistory({
-        rideId: ride.rideId,
-        status: finalStatus,
-        riderName: ride.riderName,
-        driverName: ride.driverName ?? "N/A",
-        pickupAddress: ride.pickupAddress,
-        destAddress: ride.destAddress,
-        fare: finalStatus === "completed" ? ride.fare : 0,
-        requestedAt: new Date(ride.requestedAt).toISOString(),
-        completedAt: new Date().toISOString(),
-      });
-
-      await remove(ref(db, FIREBASE_PATHS.ACTIVE_RIDE));
+      try {
+        await saveRideHistory({
+          rideId: ride.rideId,
+          status: finalStatus,
+          riderName: ride.riderName,
+          driverName: ride.driverName ?? "N/A",
+          pickupAddress: ride.pickupAddress,
+          destAddress: ride.destAddress,
+          fare: finalStatus === "completed" ? ride.fare : 0,
+          requestedAt: new Date(ride.requestedAt).toISOString(),
+          completedAt: new Date().toISOString(),
+        });
+      } catch (error) {
+        console.error("[saveAndClear] MockAPI save failed:", error);
+      } finally {
+        await remove(ref(db, FIREBASE_PATHS.ACTIVE_RIDE));
+      }
     },
     [saveRideHistory],
   );
